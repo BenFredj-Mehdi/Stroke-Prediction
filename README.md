@@ -27,6 +27,8 @@ This small demo shows a static frontend (HTML/CSS/JS) that submits patient data 
 - Small UI with color-coded prediction feedback and a health check pill.
 - Play a local audio file on the index page (browsers may block autoplay — see Troubleshooting).
 
+Note: The frontend no longer runs a built-in demo or simulated predictions — it expects a real prediction API available at `window.PREDICT_ENDPOINT` (configured in `App/form.html`). The previous example Node demo server has been removed; the repository uses `App/server_fastapi/` as the intended backend example.
+
 ---
 
 ## Prerequisites
