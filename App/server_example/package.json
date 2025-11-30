@@ -1,0 +1,12 @@
+{
+  "name": "stroke-demo-server",
+  "version": "1.0.0",
+  "description": "Example server that accepts stroke prediction requests and returns JSON (demo only).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

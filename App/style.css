@@ -1,0 +1,189 @@
+/* Basic reset and sensible defaults */
+:root{
+	--bg-overlay: rgba(0,0,0,0.45);
+	--accent: #00d1b2;
+	--text: #fff;
+	--max-title-width: 1200px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;}
+body{
+	font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	color:var(--text);
+	background-color:#0b0b0b; /* fallback */
+	/* Background fills the viewport using the provided AVIF image (path relative to App/index.html) */
+	background-image: url("../Images/Background.avif");
+	background-size:cover;
+	background-position:center center;
+	background-repeat:no-repeat;
+	min-height:100vh;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+}
+
+/* Root container to help center the hero */
+.page-root{
+	position:relative;
+	min-height:100vh;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:3rem 1rem;
+}
+
+/* hero: centered column layout (overlay removed) */
+.hero{position:relative;z-index:1;max-width:var(--max-title-width);text-align:center;padding:2rem;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;min-height:56vh}
+
+.title{display:block;margin:0}
+.title-gif{
+	display:block;
+	width:84vw; /* scales with viewport */
+	max-width:var(--max-title-width);
+	height:auto;
+	margin:0 auto;
+	filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));
+}
+
+.subtitle{
+	color:#ffffff; /* full white for max contrast */
+	font-size:1.15rem; /* slightly smaller */
+	font-weight:800; /* heavy weight */
+	text-transform:uppercase;
+	letter-spacing:0.06em;
+	margin-bottom:1.25rem;
+	display:inline-block; /* so we can add a pill background */
+	padding:0.45rem 0.9rem;
+	background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
+	border-radius:999px;
+	box-shadow:0 10px 30px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.4) inset;
+	text-shadow:0 6px 18px rgba(0,0,0,0.6);
+}
+.cta{display:inline-block;padding:.7rem 1.2rem;border-radius:999px;background:var(--accent);color:#02201a;text-decoration:none;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,0.35);transition:transform .16s ease, box-shadow .16s ease}
+.cta:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,0.45)}
+
+.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px}
+
+/* Responsive tweaks for small screens */
+@media (min-width:768px){
+	.title-gif{width:66vw}
+	.subtitle{font-size:1.3rem;padding:0.55rem 1rem}
+}
+@media (min-width:1100px){
+	.title-gif{width:100%;max-width:1100px}
+	.subtitle{font-size:1.45rem;padding:0.6rem 1rem}
+}
+
+/* Small accessibility helpers */
+.subtitle, .cta{font-family:inherit}
+
+/* Make sure anchors are easily readable when focused */
+.cta:focus{outline:3px solid rgba(255,255,255,0.18);outline-offset:3px}
+
+.hero{backdrop-filter: blur(6px);}
+
+/* final safe spacing */
+@media (max-height:420px){.page-root{padding:1rem}}
+
+/* Slow, dynamic page transition helpers */
+html.page-leaving .page-root{transition:transform .9s cubic-bezier(.2,.9,.2,1), filter .9s ease; transform:translateY(-18px) scale(.995); filter:blur(1px) saturate(.85)}
+.hero{transition:transform .9s cubic-bezier(.2,.9,.2,1),opacity .85s ease,filter .9s ease}
+.hero.leaving{transform:translateY(-42px) scale(.92) rotateX(4deg); opacity:0; filter:blur(2px) saturate(.6)}
+
+/* Incoming page entrance */
+.form-panel{transition:opacity .9s cubic-bezier(.2,.9,.2,1), transform .9s cubic-bezier(.2,.9,.2,1)}
+.form-panel.show{opacity:1;transform:translateY(0) scale(1)}
+.form-panel.leaving{transform:translateY(30px) scale(.98);opacity:0}
+
+/* subtle background movement to feel dynamic */
+body{transition:background-position 1.1s ease-in-out}
+html.page-leaving body{background-position:center 22%}
+
+/* Panel / Form styles and transitions */
+.panel{max-width:1200px;transition:all .5s cubic-bezier(.2,.9,.2,1);}
+.form-panel{position:relative;z-index:2;width:100%;margin-top:1.25rem;padding:1.25rem;opacity:0;transform:translateY(10px) scale(.995);pointer-events:none;}
+.form-panel.show{opacity:1;transform:none;pointer-events:auto}
+.hero.hide{opacity:0;transform:scale(.985) translateY(-5px);filter:blur(.5px);pointer-events:none}
+
+.panel-inner{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:1rem;border-radius:10px;border:1px solid rgba(255,255,255,0.06)}
+.form-panel h2{font-size:1.45rem;margin-bottom:0.25rem}
+.guide{opacity:.9;margin-bottom:1rem;color:rgba(255,255,255,0.85)}
+
+.predict-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;align-items:center}
+.predict-form label{display:flex;flex-direction:column;font-weight:700;color:rgba(255,255,255,0.92);font-size:.95rem}
+.predict-form input,.predict-form select{
+	margin-top:0.5rem;padding:.55rem .7rem;border-radius:8px;border:none;
+	/* stronger, darker background so white text and selected values are readable */
+	background:linear-gradient(180deg, rgba(2,10,10,0.55), rgba(2,10,10,0.45));
+	color:var(--text);outline:2px solid transparent;transition:outline .12s ease, transform .08s ease}
+.predict-form input::placeholder{color:rgba(255,255,255,0.6)}
+.predict-form input:focus,.predict-form select:focus{outline:2px solid rgba(0,208,178,0.28);box-shadow:0 10px 30px rgba(0,208,178,0.06);transform:translateY(-2px)}
+
+/* Make the select element text clear and its menu readable where possible */
+.predict-form select{appearance:none;-webkit-appearance:none;-moz-appearance:none;position:relative;padding-right:2.2rem}
+.predict-form select option{color:var(--text);background:rgba(0,0,0,0.9)}
+
+/* Add a subtle custom caret using a pseudo element on the container label (keeps native dropdown for accessibility) */
+.predict-form label{position:relative}
+.predict-form label::after{content:"\25BC";position:absolute;right:.8rem;top:50%;transform:translateY(-50%);pointer-events:none;color:rgba(255,255,255,0.7)}
+.predict-form .help{font-weight:400;color:rgba(255,255,255,0.6);font-size:.8rem;margin-top:.15rem}
+
+.form-actions{grid-column:1/-1;display:flex;gap:.6rem;align-items:center;margin-top:.6rem}
+.predict-form button{padding:.7rem 1rem;border-radius:10px;border:none;background:var(--accent);color:#02201a;font-weight:800;cursor:pointer}
+.predict-form .secondary{background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--text);padding:.65rem .9rem}
+
+.result{grid-column:1/-1;margin-top:1rem;padding:.9rem;border-radius:8px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04)}
+.result .loading{opacity:.85}
+.result .result-inner{display:flex;flex-direction:column;gap:.6rem}
+.result-badge{display:inline-block;padding:.3rem .6rem;border-radius:999px;font-weight:800}
+.result-badge.good{background:linear-gradient(90deg,#0fffc3,#00d1b2);color:#002723}
+.result-badge.bad{background:linear-gradient(90deg,#ffb0b0,#ff5c5c);color:#3b0202}
+.result-badge.maybe{background:linear-gradient(90deg,#ffe08a,#ffb84d);color:#5a3b00}
+.result-badge .maybe-text{font-size:0.95em;font-weight:600;color:#b36b00;margin-left:0.4em;}
+.probability{font-size:1.05rem}
+.note{font-size:.85rem;color:rgba(255,255,255,0.78)}
+.result-actions{margin-top:.6rem}
+.result-actions button{padding:.55rem .9rem;border-radius:10px;border:none;background:rgba(255,255,255,0.06);color:var(--text)}
+
+@media (max-width:520px){
+	.predict-form{grid-template-columns:1fr}
+	.title-gif{width:92vw}
+}
+
+/* Full-screen prediction tint when result is available */
+
+html.predicted-true::before,
+html.predicted-false::before,
+html.predicted-orange::before,
+html.predicted-green::before{
+	content:"";
+	position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:0;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.9,.2,1);
+}
+html.predicted-true::before{background:linear-gradient(180deg, rgba(255,80,80,0.18), rgba(200,20,20,0.12));opacity:1}
+html.predicted-false::before{background:linear-gradient(180deg, rgba(80,150,255,0.14), rgba(35,106,255,0.12));opacity:1}
+html.predicted-orange::before{background:linear-gradient(180deg, rgba(255,200,80,0.18), rgba(255,180,70,0.12));opacity:1}
+html.predicted-green::before{background:linear-gradient(180deg, rgba(80,255,180,0.14), rgba(0,208,178,0.12));opacity:1}
+
+/* Make the hero contrast with the tint */
+html.predicted-true .hero, html.predicted-false .hero, html.predicted-orange .hero, html.predicted-green .hero{filter:brightness(.92) contrast(1.05) saturate(.95)}
+
+/* Big on-screen message area near top of form page */
+
+.prediction-banner{position:fixed;left:50%;top:6vh;transform:translateX(-50%);z-index:1100;padding:1rem 1.25rem;border-radius:12px;font-weight:800;color:white;box-shadow:0 12px 40px rgba(0,0,0,0.45);display:flex;align-items:center;gap:.6rem;opacity:0;transition:opacity .5s ease, transform .5s ease}
+html.predicted-true .prediction-banner, .prediction-banner.red{background:linear-gradient(90deg,#ff5c5c,#ff9a9a);opacity:1;transform:translateX(-50%) translateY(0)}
+html.predicted-false .prediction-banner, .prediction-banner.green{background:linear-gradient(90deg,#5db3ff,#9ad1ff);opacity:1;transform:translateX(-50%) translateY(0)}
+html.predicted-orange .prediction-banner, .prediction-banner.orange{background:linear-gradient(90deg,#ffe08a,#ffb84d);color:#5a3b00;opacity:1;transform:translateX(-50%) translateY(0)}
+html.predicted-green .prediction-banner, .prediction-banner.green{background:linear-gradient(90deg,#0fffc3,#00d1b2);color:#002723;opacity:1;transform:translateX(-50%) translateY(0)}
+
+.prediction-banner .dot{width:12px;height:12px;border-radius:999px;background:rgba(255,255,255,0.95);opacity:.95}
+
+/* server status pill */
+.server-status{position:fixed;right:18px;top:18px;z-index:1200;display:flex;align-items:center;gap:.6rem;padding:.5rem .6rem;border-radius:999px;background:linear-gradient(90deg, rgba(0,0,0,0.3), rgba(255,255,255,0.02));backdrop-filter:blur(6px);box-shadow:0 6px 18px rgba(0,0,0,0.35);color:var(--text);font-weight:700}
+.server-status .dot{width:10px;height:10px;border-radius:999px;background:orange}
+.server-status .status-text{font-size:.88rem;opacity:.95}
+.server-status button.small{padding:.35rem .6rem;border-radius:999px;font-weight:700;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
+.server-status.ok .dot{background:limegreen}
+.server-status.ok .status-text{opacity:1}
+.server-status.bad .dot{background:#ff6363}
+.server-status.bad .status-text{opacity:1}
+

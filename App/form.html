@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Stroke Prediction — Form</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="form-page">
+    <main class="page-root">
+      <!-- banner that appears when a prediction is returned (colored by CSS classes on <html>) -->
+      <div class="server-status" id="serverStatus" aria-hidden="false">
+        <div class="dot" id="serverDot"></div>
+        <div class="status-text">Checking server…</div>
+        <button id="checkServerBtn" class="secondary small">Check</button>
+      </div>
+      <div class="prediction-banner" id="predictionBanner" aria-hidden="true" hidden>
+        <div class="dot" aria-hidden="true"></div>
+        <div class="message">Prediction result</div>
+      </div>
+      <section class="panel form-panel show" aria-hidden="false">
+        <div class="panel-inner">
+          <h2>Fill this form to predict the case</h2>
+          <p class="guide">Please enter the patient's details below. All predictions are demo-only and not a medical diagnosis.</p>
+
+          <form id="predictForm" class="predict-form" autocomplete="off">
+            <label>id
+              <input name="id" type="text" placeholder="unique id (e.g. PAT-0001)" required />
+            </label>
+
+            <label>gender
+              <select name="gender" required>
+                <option value="">Choose...</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </label>
+
+            <label>age
+              <input name="age" type="number" min="0" max="130" step="1" placeholder="e.g. 49" required />
+            </label>
+
+            <label>hypertension
+              <select name="hypertension" required>
+                <option value="">Choose...</option>
+                <option value="0">0 (no)</option>
+                <option value="1">1 (yes)</option>
+              </select>
+            </label>
+
+            <label>heart_disease
+              <select name="heart_disease" required>
+                <option value="">Choose...</option>
+                <option value="0">0 (no)</option>
+                <option value="1">1 (yes)</option>
+              </select>
+            </label>
+
+            <label>ever_married
+              <select name="ever_married" required>
+                <option value="">Choose...</option>
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </label>
+
+            <label>work_type
+              <select name="work_type" required>
+                <option value="">Choose...</option>
+                <option>children</option>
+                <option>Govt_job</option>
+                <option>Never_worked</option>
+                <option>Private</option>
+                <option>Self-employed</option>
+              </select>
+            </label>
+
+            <label>Residence_type
+              <select name="Residence_type" required>
+                <option value="">Choose...</option>
+                <option>Rural</option>
+                <option>Urban</option>
+              </select>
+            </label>
+
+            <label>avg_glucose_level
+              <input name="avg_glucose_level" type="number" step="0.1" min="0" placeholder="e.g. 85.5" required />
+            </label>
+
+            <label>bmi
+              <input name="bmi" type="text" placeholder="e.g. 24.9 or N/A" />
+              <small class="help">If unknown, enter N/A or leave blank</small>
+            </label>
+
+            <label>smoking_status
+              <select name="smoking_status" required>
+                <option value="">Choose...</option>
+                <option>formerly smoked</option>
+                <option>never smoked</option>
+                <option>smokes</option>
+                <option>Unknown</option>
+              </select>
+            </label>
+
+            <div class="form-actions">
+              <button type="submit" id="predictBtn">Predict</button>
+              <button type="button" id="backBtn" class="secondary">Back</button>
+            </div>
+          </form>
+
+          <div id="predictionResult" class="result" hidden aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Set PREDICT_ENDPOINT to your model's HTTP endpoint. Example: http://localhost:5000/predict -->
+    <!-- Default points to a local FastAPI server we can run on port 8000. Change if your server runs elsewhere. -->
+    <script>window.PREDICT_ENDPOINT = 'http://localhost:8000/predict';</script>
+    <script src="form.js"></script>
+  </body>
+</html>
