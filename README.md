@@ -4,8 +4,6 @@
 
 This small demo shows a static frontend (HTML/CSS/JS) that submits patient data to a local FastAPI prediction server. The backend loads a Keras model (.h5) and a pre-fitted scaler (.pkl) and returns a probability and predicted label. The UI includes helpful diagnostics, a server health check, and a fun intro audio player.
 
-> IMPORTANT: This repository is a demo / hackathon project. It is **not** medical software and must not be used for real clinical decisions.
-
 ---
 
 ## Contents
@@ -85,7 +83,6 @@ The frontend will POST CSV to the default prediction endpoint at `http://localho
 
 - Intro audio is handled by `App/intro.js`. Place your audio at `App/Songs/`.
 - This repo uses a filename: `SUPER MARIO BROS. - Main Theme By Koji Kondo  Nintendo.mp3` — update the file or the path in `intro.js` if needed.
-- Note: Most modern browsers block autoplay with sound unless the user interacts with the page. If autoplay is blocked the page will show after a short delay or after user input — consider adding a visible "Play" button for better UX.
 
 ---
 
@@ -107,14 +104,6 @@ Invoke-RestMethod -Method Get -Uri http://localhost:8000/health
 
 ---
 
-## Troubleshooting
-
-- "Failed to fetch" from browser: check the backend is running, confirm `window.PREDICT_ENDPOINT` is set correctly, and check the browser console for CORS errors. If the backend is remote, ensure CORS is enabled on the server.
-- Autoplay blocked: browsers restrict autoplaying audio with sound. Add a visible play button or detect autoplay failure in `intro.js` and show a prompt.
-- CSV parsing errors: ensure header names and types match the server preprocessing in `server_fastapi/server.py`.
-
----
-
 ## Security & production notes
 
 - This repo uses example code suitable for local development. For production you should:
@@ -122,7 +111,3 @@ Invoke-RestMethod -Method Get -Uri http://localhost:8000/health
   - Serve models from a secure, immutable source (avoid untrusted pickle files)
   - Add logging, monitoring, and rate-limiting
   - Harden CORS and HTTPS configuration
-
----
-
-If you'd like, I can also add a short troubleshooting script that tests the backend and frontend connectivity automatically. Want me to add that here? ✅
